@@ -15,4 +15,3 @@ jobs:
 
       - name: lint tf
         uses:  actionshub/terraform-lint@master
-      

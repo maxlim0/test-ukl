@@ -16,7 +16,7 @@ provider "google" {
   region      = var.gcp_zone_eu-west4-a
   zone        = var.gcp_zone_eu-west4-a
 }
-d
+
 resource "google_container_cluster" "gke-ukl" {
   name     = "gke-ukl"
   location = var.gcp_zone_eu-west4-a

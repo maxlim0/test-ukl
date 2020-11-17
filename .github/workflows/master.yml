@@ -24,3 +24,28 @@ jobs:
     - name: TF Apply
       id: apply
       run: terraform apply -auto-approve
+
+    - name: install kubectl
+      run: |
+        curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+
+    - id: get-credentials
+      uses: google-github-actions/get-gke-credentials@main
+      with:
+        cluster_name: gke-ukl
+        location: europe-west4-a
+        credentials: ${{ secrets.GKE_CREDENTIALS_SA_TERRAFORM }}
+
+    - name: install kubectl
+      run: |
+        kubectl get no
+
+    - name: Helm 3
+      uses: WyriHaximus/github-action-helm3@v2.0
+      with:
+        exec: helm install -f nginx-ingress/values.yml ingress-nginx ingress-nginx/ingress-nginx
+
+
+    # TODO
+    # Helm lint
+    # Helm release

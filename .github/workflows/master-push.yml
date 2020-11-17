@@ -36,16 +36,11 @@ jobs:
         location: europe-west4-a
         credentials: ${{ secrets.GKE_CREDENTIALS_SA_TERRAFORM }}
 
-    - name: install kubectl
-      run: |
-        kubectl get no
-
     - name: Helm 3
       uses: WyriHaximus/github-action-helm3@v2.0
       with:
         exec: helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx && helm install -f nginx-ingress/values.yml ingress-nginx ingress-nginx/ingress-nginx
 
-
-    # TODO
-    # Helm lint
-    # Helm release
+    - name: rm external lb
+      run: |
+        kubectl delete svc ingress-nginx-controller

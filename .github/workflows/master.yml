@@ -24,3 +24,7 @@ jobs:
     - name: TF Apply
       id: apply
       run: terraform apply -auto-approve
+
+    # TODO
+    # Helm lint
+    # Helm release

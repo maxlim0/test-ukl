@@ -1,0 +1,6 @@
+controller:
+  service:
+    internal:
+      enabled: true
+      annotations:
+        cloud.google.com/load-balancer-type: "Internal"

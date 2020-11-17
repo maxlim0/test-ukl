@@ -1,0 +1,26 @@
+name: test-ukl-master-push
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        cli_config_credentials_token: ${{ secrets.TF_CLOUD_UKL_TOKEN }}
+
+    - name: Terraform Init
+      id: init
+      run: terraform init
+
+    - name: TF Apply
+      id: apply
+      run: terraform apply -auto-approve

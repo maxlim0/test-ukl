@@ -7,6 +7,13 @@ terraform {
       source = "hashicorp/helm"
     }
   }
+  backend "remote" {
+    organization = "maxlim0"
+
+    workspaces {
+      name = "test-ukl"
+    }
+  }
 }
 
 

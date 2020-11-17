@@ -12,4 +12,5 @@ resource "google_compute_firewall" "default" {
   }
 
   source_tags = ["ukl"]
+  source_ranges = [google_compute_subnetwork.ukl-sub-test.ip_cidr_range]
 }

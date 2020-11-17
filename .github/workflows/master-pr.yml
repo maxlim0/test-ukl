@@ -13,7 +13,7 @@ jobs:
       - name: checkout code
         uses: actions/checkout@v2
 
-      - id: install kubectl
+      - name: install kubectl
         run: |
           curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
 
@@ -24,7 +24,7 @@ jobs:
           location: europe-west4-a
           credentials: ${{ secrets.GKE_CREDENTIALS_SA_TERRAFORM }}
 
-      - id: install kubectl
+      - name: install kubectl
         run: |
           kubectl get no
 

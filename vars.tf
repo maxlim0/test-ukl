@@ -30,7 +30,6 @@ variable "network_name" {
 
 variable "SA_TERRAFORM_K8S_TEST_291010" {
   type    = string
-  default = ""
 }
 
 

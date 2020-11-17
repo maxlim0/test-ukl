@@ -18,12 +18,12 @@ terraform {
 
 
 provider "google" {
-  credentials = file("/home/justusr/.gcp/credentials.json")
+  credentials = var.SA_TERRAFORM_K8S_TEST_291010
   project     = var.project_name
   region      = var.gcp_zone_eu-west4-a
   zone        = var.gcp_zone_eu-west4-a
 }
-d
+
 resource "google_container_cluster" "gke-ukl" {
   name     = "gke-ukl"
   location = var.gcp_zone_eu-west4-a

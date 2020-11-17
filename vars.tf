@@ -27,3 +27,9 @@ variable "network_name" {
   type    = string
   default = "ukl-vpc-test"
 }
+
+variable "SA_TERRAFORM_K8S_TEST_291010" {
+  type    = string
+}
+
+

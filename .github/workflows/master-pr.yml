@@ -1,0 +1,20 @@
+name: test-ukl-master-pull-request
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  linter_job:
+    name: Happy linting
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+
+      - name: lint tf
+        uses:  actionshub/terraform-lint@master
+        continue-on-error: false
+
+

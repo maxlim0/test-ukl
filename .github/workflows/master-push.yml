@@ -1,0 +1,46 @@
+name: test-ukl-master-push
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        cli_config_credentials_token: ${{ secrets.TF_CLOUD_UKL_TOKEN }}
+
+    - name: Terraform Init
+      id: init
+      run: terraform init
+
+    - name: TF Apply
+      id: apply
+      run: terraform apply -auto-approve
+
+    - name: install kubectl
+      run: |
+        curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+
+    - id: get-credentials
+      uses: google-github-actions/get-gke-credentials@main
+      with:
+        cluster_name: gke-ukl
+        location: europe-west4-a
+        credentials: ${{ secrets.GKE_CREDENTIALS_SA_TERRAFORM }}
+
+    - name: Helm 3
+      uses: WyriHaximus/github-action-helm3@v2.0
+      with:
+        exec: helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx && helm install -f nginx-ingress/values.yml ingress-nginx -n infrastructure ingress-nginx/ingress-nginx
+
+    - name: rm external lb
+      run: |
+        kubectl delete svc ingress-nginx-controller -n infrastructure
